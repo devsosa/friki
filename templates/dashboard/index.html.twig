@@ -5,20 +5,17 @@
 {% block body %}
 {{ parent() }}
 {# total items count #}
-<pre>
-    {{ dump(pagination) }}
-</pre>
 
 <div class="container">
     <div class="row">
         <div class="col-md-8 cursor">
             {% for post in pagination %}
-                <div class="bg-white rounded p-3 my-3" onclick="window.location.href='#'">
+                <div class="bg-white rounded p-3 my-3" onclick="window.location.href='{{ path('VerPost',{id:post.id}) }}'">
                     <div class="d-flex bg-highlight">
                         <div class="p-2 flex-grow-1 bd-highlight">
                             <h3>{{ post.titulo }}</h3>
                             <div class="my-3 bg-yellow"><i class="far fa-user"><strong>Creado por: {{ post.nombre }}</strong></i></div>
-                            <div class="bg-green"><i class="far fa-clock"><strong>Fecha de publicacion: {{ post.fecha_publicacion | date('Y-m-d H:i:s') }}</strong></i></div>
+                            <div class="bg-green"><i class="far fa-clock"><strong>Fecha de publicacion: {{ post.fechapublicacion | date('Y-m-d H:i:s') }}</strong></i></div>
                         </div>
                         <div class="p-2 bd-highlight">
                             <div class="align-self-center">
