@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello RegistroController!{% endblock %}
+{% block title %}RegistroController!{% endblock %}
 
 {% block body %}
 <!-- Imprimiento el mensaje -->
@@ -10,8 +10,16 @@
     </div>
 {% endfor %}
 
+<div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-6 bg-white rounded my-3 p-5">
+            <h1>Registro</h1>
+            {{ form(formulario) }}
+        </div>
+    </div>
+</div>
 
-{{ form(formulario) }}
+
 
 
 

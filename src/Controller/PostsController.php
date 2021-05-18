@@ -6,6 +6,7 @@ use App\Entity\Post;
 use App\Form\PostsType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -81,5 +82,32 @@ class PostsController extends AbstractController
         return $this->render('posts/misPosts.html.twig',[
             'posts' => $posts
         ]);
+    }
+
+    /**
+     * @Route("/likes", options={"expose"=true}, name="Likes")
+     */
+    public function Like(Request $request){
+        if($request->isXmlHttpRequest()){
+            $em = $this->getDoctrine()->getManager();
+            $user = $this->getUser();
+
+            //Obterne el id a traves del click
+            $id = $request->request->get('id');
+            //Buscar el post con el id
+            $post = $em->getRepository(Post::class)->find($id);
+            //Obtener todos los likes
+            $likes = $post->getLikes();
+            //concatenar el id del usuario
+            $likes .= $user->getId().',';
+            //Setear los post con los likes
+            $post->setLikes($likes);
+            $em->flush();
+
+            return new JsonResponse(['likes'=>$likes]);
+        }else{
+            throw new \Exception('No eres un ajax');
+        }
+
     }
 }
